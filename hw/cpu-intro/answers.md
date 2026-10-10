@@ -49,6 +49,7 @@ Time   PID: 0     PID: 1        CPU     IOs
 ```
 程序命令-l 4:100,1:0
 进程0先执行4个时间单位的cpu指令; 之后进程1先执行调用cpu发起I/O, 再执行I/O, 导致cpu阻塞, 最后调用cpu结束I/O 
+所以完成这两个进程需要11个时间单位。
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
@@ -83,11 +84,12 @@ Time   PID: 0     PID: 1        CPU     IOs
 - Verified result / 验证结果:
 - Analysis / 分析:
 ```
-1. 缺少总时间、CPU利用率
+1. 预测错误, 对于指令运行顺序理解错误, 应该是先执行I/O指令, 再执行cpu指令
+2. 缺少总时间、CPU利用率
 Stats: Total Time 7
 Stats: CPU Busy 6 (85.71%)
 Stats: IO Busy  5 (71.43%)
-2. 对于指令运行顺序理解错误, 应该是先执行I/O指令, 再执行cpu指令
+3. 交换顺序很重要。先执行I/O进程，再执行cpu进程，可以使用I/O等待时的cpu，从而提高cpu利用率并缩短总执行时间。
 ```
 
 ## Q4
@@ -117,6 +119,7 @@ Time   PID: 0        PID: 1    CPU     IOs
 Stats: Total Time 11
 Stats: CPU Busy 6 (54.55%)
 Stats: IO Busy  5 (45.45%)
+2. 这样做使得进程0在I/O等待时, cpu处于空闲状态, 未能充分使用cpu, 降低了cpu使用率
 ```
 
 ## Q5
@@ -142,6 +145,7 @@ Time   PID: 0        PID: 1        CPU     IOs
 Stats: Total Time 7
 Stats: CPU Busy 6 (85.71%)
 Stats: IO Busy  5 (71.43%)
+2. 这样做使得进程0在I/O等待时, cpu转而执行进程1, 充分使用cpu, 提高了cpu使用率
 ```
 
 ## Q6
@@ -191,6 +195,7 @@ Time   PID: 0        PID: 1        PID: 2        PID: 3        CPU     IOs
 Stats: Total Time 31
 Stats: CPU Busy 21 (67.74%)
 Stats: IO Busy  15 (48.39%)
+2. 这样做在执行后2个I/O指令时, cpu处于闲置状态, cpu未能完全使用, 降低了cpu使用率
 ```
 
 ## Q7
@@ -222,7 +227,6 @@ Time   PID: 0        PID: 1        PID: 2        PID: 3        CPU     IOs
 - Reasoning / 理由:
 ```
 区别是进程0中的I/O指令在完成一个后, 就立即进行下一个, 而进程1,进程2,进程3则在I/O指令运行的间隙执行cpu指令
-这样可以充分利用I/O指令执行时的等待时间, 提高整体的效率
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
@@ -231,6 +235,7 @@ Time   PID: 0        PID: 1        PID: 2        PID: 3        CPU     IOs
 Stats: Total Time 21
 Stats: CPU Busy 21 (100.00%)
 Stats: IO Busy  15 (71.43%)
+2. 这样可以充分利用I/O指令执行时的等待时间, 提高整体的效率
 ```
 
 ## Q8
