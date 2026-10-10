@@ -22,6 +22,12 @@ Time   PID: 0     PID: 1     CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 10
+Stats: CPU Busy 10 (100.00%)
+Stats: IO Busy  0 (0.00%)
+```
 
 ## Q2
 - Prediction / 预测:
@@ -46,6 +52,12 @@ Time   PID: 0     PID: 1        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 11
+Stats: CPU Busy 6 (54.55%)
+Stats: IO Busy  5 (45.45%)
+```
 
 ## Q3
 - Prediction / 预测:
@@ -70,6 +82,13 @@ Time   PID: 0     PID: 1        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 7
+Stats: CPU Busy 6 (85.71%)
+Stats: IO Busy  5 (71.43%)
+2. 对于指令运行顺序理解错误, 应该是先执行I/O指令, 再执行cpu指令
+```
 
 ## Q4
 - Prediction / 预测:
@@ -93,6 +112,12 @@ Time   PID: 0        PID: 1    CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 11
+Stats: CPU Busy 6 (54.55%)
+Stats: IO Busy  5 (45.45%)
+```
 
 ## Q5
 - Prediction / 预测:
@@ -112,6 +137,12 @@ Time   PID: 0        PID: 1        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 7
+Stats: CPU Busy 6 (85.71%)
+Stats: IO Busy  5 (71.43%)
+```
 
 ## Q6
 - Prediction / 预测:
@@ -155,6 +186,12 @@ Time   PID: 0        PID: 1        PID: 2        PID: 3        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 31
+Stats: CPU Busy 21 (67.74%)
+Stats: IO Busy  15 (48.39%)
+```
 
 ## Q7
 - Prediction / 预测:
@@ -189,6 +226,12 @@ Time   PID: 0        PID: 1        PID: 2        PID: 3        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+Stats: Total Time 21
+Stats: CPU Busy 21 (100.00%)
+Stats: IO Busy  15 (71.43%)
+```
 
 ## Q8
 - Prediction / 预测:
@@ -396,4 +439,50 @@ Time   PID: 0        PID: 1        CPU     IOs
 ```
 - Verified result / 验证结果:
 - Analysis / 分析:
+```
+1. 缺少总时间、CPU利用率
+1.1. python3 process-run.py -s 1 -l 3:50,3:50
+Stats: Total Time 15
+Stats: CPU Busy 8 (53.33%)
+Stats: IO Busy  10 (66.67%)
 
+1.2. python3 process-run.py -s 1 -l 3:50,3:50 -I IO_RUN_IMMEDIATE
+Stats: Total Time 15
+Stats: CPU Busy 8 (53.33%)
+Stats: IO Busy  10 (66.67%)
+
+1.3. python3 process-run.py -s 1 -l 3:50,3:50 -S SWITCH_ON_END
+Stats: Total Time 18
+Stats: CPU Busy 8 (44.44%)
+Stats: IO Busy  10 (55.56%)
+
+1.4. python3 process-run.py -s 2 -l 3:50,3:50
+Stats: Total Time 16
+Stats: CPU Busy 10 (62.50%)
+Stats: IO Busy  14 (87.50%)
+
+1.5. python3 process-run.py -s 2 -l 3:50,3:50 -I IO_RUN_IMMEDIATE
+Stats: Total Time 16
+Stats: CPU Busy 10 (62.50%)
+Stats: IO Busy  14 (87.50%)
+
+1.6. python3 process-run.py -s 2 -l 3:50,3:50 -S SWITCH_ON_END
+Stats: Total Time 30
+Stats: CPU Busy 10 (33.33%)
+Stats: IO Busy  20 (66.67%)
+
+1.7. python3 process-run.py -s 3 -l 3:50,3:50
+Stats: Total Time 18
+Stats: CPU Busy 9 (50.00%)
+Stats: IO Busy  11 (61.11%)
+
+1.8. python3 process-run.py -s 3 -l 3:50,3:50 -I IO_RUN_IMMEDIATE
+Stats: Total Time 17
+Stats: CPU Busy 9 (52.94%)
+Stats: IO Busy  11 (64.71%)
+
+1.9. python3 process-run.py -s 3 -l 3:50,3:50 -S SWITCH_ON_END
+Stats: Total Time 24
+Stats: CPU Busy 9 (37.50%)
+Stats: IO Busy  15 (62.50%)
+```
